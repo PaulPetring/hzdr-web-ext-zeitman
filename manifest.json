@@ -1,0 +1,43 @@
+{
+
+  "manifest_version": 2,
+  "name": "Zeitman",
+  "version": "1.0",
+  "default_locale": "en",
+  "description": "Adds a popup for Zeitman.",
+
+  "icons": {
+    "48": "icons/zeitman-48.png",
+    "96": "icons/zeitman-96.png"
+  },
+
+  "background": {
+    "scripts": ["content_scripts/background.js"]
+  },
+
+   "permissions": [
+    "activeTab",
+    "storage",
+    "*://*/*",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "notifications"
+  ],
+  "options_ui": {
+      "page": "options.html"
+    },
+
+  "browser_action": {
+    "default_icon": "icons/zeitman-48.png",
+    "default_title": "HZDR Zeitman Plugin",
+    "default_popup": "popup/zeitman.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://zeitweb.hzdr.de/*"],
+      "js": ["content_scripts/today.js"]
+    }
+  ]
+}
