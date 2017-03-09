@@ -1,4 +1,4 @@
-# web-ext-hzdr-zeitman
+# hzdr-web-ext-zeitman 
 
 small web-extension to handle the hzdr zeitman website in a popup by showing only the relevant day.
 
