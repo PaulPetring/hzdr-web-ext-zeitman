@@ -1,10 +1,10 @@
 {
 
   "manifest_version": 2,
-  "name": "Zeitman",
+  "name": "__MSG_extensionName__",
   "version": "1.0",
   "default_locale": "en",
-  "description": "Adds a popup for Zeitman.",
+  "description": "__MSG_extensionDescription__",
 
   "applications": {
     "gecko": {
@@ -22,12 +22,10 @@
   },
 
    "permissions": [
-    "activeTab",
     "storage",
     "*://zeitweb.hzdr.de/scripts_zeitm/*",
     "webRequest",
-    "webRequestBlocking",
-    "notifications"
+    "webRequestBlocking"
   ],
   "options_ui": {
       "page": "options.html"

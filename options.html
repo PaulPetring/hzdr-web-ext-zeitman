@@ -4,23 +4,28 @@
 
 <head>
     <meta charset="utf-8">
+    <script type="text/javascript" src="/lib/i18n.js"></script>
 </head>
 
 <body>
     <form>
         <fieldset>
             <legend>Options</legend>
-            <p>Username</p> <input type="checkbox" id="save_username" title="check if username should be saved" checked="checked">
-            <input type="text" id="username">
-            <p>passwort</p> <input type="checkbox" id="save_passwort" title="check if password should be saved">
-            <input type="password" id="passwort">
+            <p class="i18n_options_username_text"></p>
+            <input type="text" id="username"><br/>
+            <input type="checkbox" id="save_username" checked="checked">
+            <small class="i18n_options_username_text_desc" ></small>
+            <p class="i18n_options_password_text"></p>
+            <input type="password" id="passwort"><br/>
+            <input type="checkbox" id="save_passwort">
+            <small class="i18n_options_password_text_desc" ></small>
             <div style="display:none;">
             <p>session_id</p>
             <input type="text" id="session_id">
             </div>
             <p>
-            <button type="submit">Save</button>
-            <button type="reset">Clear</button>
+            <button type="submit" class="i18n_options_button_save"></button>
+            <button type="reset" class="i18n_options_button_reset"></button>
           </p>
         </fieldset>
     </form>

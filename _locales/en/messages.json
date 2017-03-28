@@ -1,28 +1,30 @@
 
 {
   "extensionName": {
-    "message": "Notify link clicks i18n",
+    "message": "HZDR Zeitman Browser Plugin",
     "description": "Name of the extension."
   },
 
   "extensionDescription": {
-    "message": "Shows a notification when the user clicks on links.",
+    "message": "Allows quick access to the HZDR Worktime Management Tool.",
     "description": "Description of the extension."
   },
-
-  "notificationTitle": {
-    "message": "Click notification",
-    "description": "Title of the click notification."
+  "options_username_text": {
+    "message": "Your HZDR username: "
   },
-
-  "notificationContent": {
-    "message": "You clicked $URL$.",
-    "description": "Tells the user which link they clicked.",
-    "placeholders": {
-      "url" : {
-        "content" : "$1",
-        "example" : "https://developer.mozilla.org"
-      }
-    }
+  "options_username_text_desc": {
+      "message": "save username and autofill when possible."
+    },
+  "options_password_text": {
+    "message": "Your HZDR password: "
+  },
+  "options_password_text_desc": {
+    "message": "save password and autofill when possible."
+  },
+  "options_button_save": {
+    "message": "save"
+  },
+  "options_button_reset": {
+    "message": "reset"
   }
 }

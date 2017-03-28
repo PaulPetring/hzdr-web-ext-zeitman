@@ -1,0 +1,30 @@
+
+{
+  "extensionName": {
+    "message": "HZDR Zeitman Browser Erweiterung",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "Ermöglicht das schnelle Ereichen des HZDR Zeitmanbereiches.",
+    "description": "Description of the extension."
+  },
+  "options_username_text": {
+    "message": "Ihr HZDR Benutzername: "
+  },
+  "options_username_text_desc": {
+    "message": "Benutzername speichern und automatisch einfügen."
+  },
+  "options_password_text": {
+    "message": "Ihr HZDR Passwort: "
+  },
+  "options_password_text": {
+    "message": "Passwort speichern und automatisch einfügen."
+  },
+  "options_button_save": {
+    "message": "Speichern"
+  },
+  "options_button_reset": {
+    "message": "Zurücksetzen"
+  }
+}
