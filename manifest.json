@@ -5,7 +5,7 @@
   "version": "1.0",
   "default_locale": "en",
   "description": "__MSG_extensionDescription__",
-  "author": { "email": "p.petring@hzdr.de" },
+  "author": "Paul Petring p.petring@hzdr.de",
   "homepage_url": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/",
 
   "applications": {
@@ -34,8 +34,8 @@
     },
 
   "browser_action": {
-    "default_icon": "icons/zeitman-48.png",
-    "default_title": "HZDR Zeitman Plugin",
+    "default_icon": "icons/zeitman-96.png",
+    "default_title": "__MSG_extensionName__",
     "default_popup": "popup/zeitman.html"
   },
 

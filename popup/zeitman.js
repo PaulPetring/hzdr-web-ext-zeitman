@@ -19,23 +19,28 @@ function getRemote(url, data) {
 }
 
 function fillCredentials() {
+    //in store means should be shown, handling is done by options
     var username = browser.storage.local.get('username');
     var passwort = browser.storage.local.get('passwort');
 
     username.then((res) => {
-        //console.log(res.username);
-        $('input[name="username"]').val(res.username);
+        if(res.username) {
+          $('input[name="username"]').val(res.username);
+        }
     });
 
     passwort.then((res) => {
-        //console.log(res.passwort);
-        $('input[name="passwort"]').val(res.passwort);
+        if(res.passwort) {
+          $('input[name="passwort"]').val(res.passwort);
+        }
     });
 }
 
 function provideLoginForm() {
     console.log("provideLoginForm start");
-    $('#result').html('<div style="height: 225px; overflow:hidden">' + getRemote(zeitman_url + "login.php", null) + '</div>')
+    $('#result').html('<div style="height: 225px; overflow:hidden">' + getRemote(zeitman_url + "login.php", null) + '</div> <a style="cursor:pointer; float:right;" id="options"><small> Options </small></a>')
+
+    $('#result').find("#options").click(function(e){ browser.runtime.openOptionsPage(); e.preventDefault(); })
 
     $('#result').find('input[value="Login"]').click(function(e) {
         console.log("provideLoginForm click");
@@ -65,50 +70,49 @@ function attach_select_change_event() {
 };
 
 function getStuff() {
-    session_id = browser.storage.local.get('session_id');
-
-    session_id.then((res) => {
-        session_id = res.session_id;
+        session_id = ""; //for some reason never checked if empty
+        var _result = $('#result'); //less dom, more perfomance
         var cur_date = new Date();
-        var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + res.session_id + "&start=1&month=" + (cur_date.getMonth() + 1).toString() + "&year=" + cur_date.getFullYear().toString();
-        console.log(remote_url);
-        var main = getRemote(remote_url, null)
-        var frameteil1 = ""; // getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + res.session_id + "&actday=", null)
-        var frameteil2 = getRemote(zeitman_url + "frameteil2.php?nav=GZ_x&start=1&PHPSESSID=" + res.session_id + "&actday=", null)
 
-        //now hasseling around cross site scripting
+        //generate current month overview page url
+        var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + session_id + "&start=1&month=" + (cur_date.getMonth() + 1).toString() + "&year=" + cur_date.getFullYear().toString();
+        //get current month overview page
+        var main = getRemote(remote_url, null)
+        //getting zeitman navigation is optional
+        var frameteil1 = ""; // getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + res.session_id + "&actday=", null)
+        //getting bottom frame
+        var frameteil2 = getRemote(zeitman_url + "frameteil2.php?nav=GZ_x&start=1&PHPSESSID=" + session_id + "&actday=", null)
+
+        //now hasseling around cross site scripting by filling thre dummy frames
         $("#iframe").contents().find("body").append(main);
         $("#iframe_navigation").contents().find("body").append(frameteil1);
         $("#iframe_hauptfenster").contents().find("body").append(frameteil2);
 
-        $('#result').html(" ");
-        $('#result').append($("#iframe_hauptfenster").contents().find('tr[bgcolor="#C0C0FF"]').clone())
-        $('#result').find('input').remove();
-        $('#result').find("tr").removeAttr("bgcolor");
-        $('#result').find("td").each(function() {
+        //getting non class non id dom element from frame
+        _result.html(" ").append($("#iframe_hauptfenster").contents().find('tr[bgcolor="#C0C0FF"]').clone())
+        _result.find('input').remove();
+        _result.find("tr").removeAttr("bgcolor");
+        _result.find("td").each(function() {
             $(this).removeAttr("height");
         })
-        $('#result').find("td").last().html('<input id="save" type="submit" value="save">');
 
+        //clone change event bahavior to cloned element
         attach_select_change_event();
 
-        $('#save').click(function(e) {
+        //add save button and add click event
+        _result.find("td").last().html('<input id="save" type="submit" value="save">');
+
+        $('#save').click(function(e) { //simply submits unerlying form
             $("#iframe_hauptfenster").contents().find("body").find("form").attr("action", zeitman_url + "navigation.php").attr("target", "Hauptfenster")[0].submit();
             setTimeout(function() {
                 window.close();
             }, 500)
             e.preventDefault();
         });
-    });
 }
 
 $(document).ready(function() {
-    console.log("document ready jquery");
-    //if (already_Logged_In == false) { //TODO doen'st work
         provideLoginForm();
-    //} else {
-        //getStuff();
-    //}
 });
 
 console.log("end_zeitman");
