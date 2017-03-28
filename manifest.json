@@ -5,6 +5,8 @@
   "version": "1.0",
   "default_locale": "en",
   "description": "__MSG_extensionDescription__",
+  "author": { "email": "p.petring@hzdr.de" },
+  "homepage_url": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/",
 
   "applications": {
     "gecko": {
