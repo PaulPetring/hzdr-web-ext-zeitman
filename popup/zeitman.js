@@ -104,11 +104,11 @@ function getStuff() {
 
 $(document).ready(function() {
     console.log("document ready jquery");
-    if (already_Logged_In == false) { //TODO doen'st work
+    //if (already_Logged_In == false) { //TODO doen'st work
         provideLoginForm();
-    } else {
-        getStuff();
-    }
+    //} else {
+        //getStuff();
+    //}
 });
 
 console.log("end_zeitman");
