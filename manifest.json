@@ -6,6 +6,12 @@
   "default_locale": "en",
   "description": "Adds a popup for Zeitman.",
 
+  "applications": {
+    "gecko": {
+      "id": "p.petring@hzdr.de"
+    }
+  },
+
   "icons": {
     "48": "icons/zeitman-48.png",
     "96": "icons/zeitman-96.png"
@@ -18,10 +24,9 @@
    "permissions": [
     "activeTab",
     "storage",
-    "*://*/*",
+    "*://zeitweb.hzdr.de/scripts_zeitm/*",
     "webRequest",
     "webRequestBlocking",
-    "<all_urls>",
     "notifications"
   ],
   "options_ui": {
