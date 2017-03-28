@@ -52,7 +52,6 @@ function provideLoginForm() {
         getStuff();
 
     });
-
     fillCredentials();
     console.log("provideLoginForm ende");
 }
@@ -71,7 +70,7 @@ function getStuff() {
     session_id.then((res) => {
         session_id = res.session_id;
         var cur_date = new Date();
-        var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + res.session_id + "&start=1&month="+(cur_date.getMonth()+1).toString()+"&year="+cur_date.getFullYear().toString();
+        var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + res.session_id + "&start=1&month=" + (cur_date.getMonth() + 1).toString() + "&year=" + cur_date.getFullYear().toString();
         console.log(remote_url);
         var main = getRemote(remote_url, null)
         var frameteil1 = ""; // getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + res.session_id + "&actday=", null)
@@ -82,7 +81,6 @@ function getStuff() {
         $("#iframe_navigation").contents().find("body").append(frameteil1);
         $("#iframe_hauptfenster").contents().find("body").append(frameteil2);
 
-
         $('#result').html(" ");
         $('#result').append($("#iframe_hauptfenster").contents().find('tr[bgcolor="#C0C0FF"]').clone())
         $('#result').find('input').remove();
@@ -92,18 +90,15 @@ function getStuff() {
         })
         $('#result').find("td").last().html('<input id="save" type="submit" value="save">');
 
-
         attach_select_change_event();
-
 
         $('#save').click(function(e) {
             $("#iframe_hauptfenster").contents().find("body").find("form").attr("action", zeitman_url + "navigation.php").attr("target", "Hauptfenster")[0].submit();
-            setTimeout(function(){ window.close(); },500)
+            setTimeout(function() {
+                window.close();
+            }, 500)
             e.preventDefault();
         });
-
-
-
     });
 }
 

@@ -1,4 +1,4 @@
-document.body.style.border = "5px dashed red";
+//document.body.style.border = "5px dashed red";
 
 console.log("begin_today");
 
@@ -20,14 +20,11 @@ var year = findGetParameter("year")
 var username = document.querySelector('input[name="username"]');
 var passwort = document.querySelector('input[name="passwort"]');
 
-console.log(session_id,start,month,year)
-
 if(session_id!=null) {
   browser.storage.local.set({
         'session_id': session_id
   });
   console.log("saved: ", session_id);
 }
-
 
 console.log("end_today");

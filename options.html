@@ -10,14 +10,16 @@
     <form>
         <fieldset>
             <legend>Options</legend>
-            <p>Username</p>
+            <p>Username</p> <input type="checkbox" id="save_username" title="check if username should be saved" checked="checked">
             <input type="text" id="username">
-            <p>passwort</p>
+            <p>passwort</p> <input type="checkbox" id="save_passwort" title="check if password should be saved">
             <input type="password" id="passwort">
             <p>session_id</p>
             <input type="text" id="session_id">
+            <p>
             <button type="submit">Save</button>
             <button type="reset">Clear</button>
+          </p>
         </fieldset>
     </form>
     <script src="options.js"></script>
