@@ -19,10 +19,6 @@
     "96": "icons/zeitman-96.png"
   },
 
-  "background": {
-    "scripts": ["content_scripts/background.js"]
-  },
-
    "permissions": [
     "storage",
     "*://zeitweb.hzdr.de/scripts_zeitm/*",
@@ -32,17 +28,9 @@
   "options_ui": {
       "page": "options.html"
     },
-
   "browser_action": {
     "default_icon": "icons/zeitman-96.png",
     "default_title": "__MSG_extensionName__",
     "default_popup": "popup/zeitman.html"
-  },
-
-  "content_scripts": [
-    {
-      "matches": ["*://zeitweb.hzdr.de/*"],
-      "js": ["content_scripts/today.js"]
-    }
-  ]
+  }
 }
