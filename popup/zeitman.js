@@ -23,12 +23,12 @@ function fillCredentials() {
     var passwort = browser.storage.local.get('passwort');
 
     username.then((res) => {
-        console.log(res.username);
+        //console.log(res.username);
         $('input[name="username"]').val(res.username);
     });
 
     passwort.then((res) => {
-        console.log(res.passwort);
+        //console.log(res.passwort);
         $('input[name="passwort"]').val(res.passwort);
     });
 }
@@ -70,7 +70,10 @@ function getStuff() {
 
     session_id.then((res) => {
         session_id = res.session_id;
-        var main = getRemote(zeitman_url + "navigation.php?PHPSESSID=" + res.session_id + "&start=1&month=2&year=2017", null)
+        var cur_date = new Date();
+        var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + res.session_id + "&start=1&month="+(cur_date.getMonth()+1).toString()+"&year="+cur_date.getFullYear().toString();
+        console.log(remote_url);
+        var main = getRemote(remote_url, null)
         var frameteil1 = ""; // getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + res.session_id + "&actday=", null)
         var frameteil2 = getRemote(zeitman_url + "frameteil2.php?nav=GZ_x&start=1&PHPSESSID=" + res.session_id + "&actday=", null)
 
