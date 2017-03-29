@@ -4,12 +4,10 @@ small non-official web-extension to handle the hzdr zeitman (work time managemen
 
 Supports User and Password saving. Merge requests welcome!
 
-## Howto Install 
+## Howto Install
 
-1. [Download Mozilla signed .xpi from this repo](./web-ext-artifacts/hzdr_zeitman_browser_plugin-1.0-an+fx.xpi)
-1. Goto Firefox Addons -> Extensions
-1. Install Extension from file
-1. confirm
+1. [Download Mozilla signed .xpi from this repo](./web-ext-artifacts/hzdr_zeitman_browser_plugin-1.2-an+fx.xpi)
+1. Open it with firefox
 
 ## Howto use
 
@@ -23,4 +21,4 @@ remote controls website in popup:
 
 has options to save username and/or password and prefill it in popup
 
-![zeitweb_options.png](./zeitweb_options.png) 
+![zeitweb_options.png](./zeitweb_options.png)
