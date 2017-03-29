@@ -47,7 +47,7 @@ function provideLoginForm() {
         var typed_user = $('#result').find('input[name="username"]').val();
         var typed_pass = $('#result').find('input[name="passwort"]').val();
 
-        data = {
+        var data = {
             username: typed_user,
             passwort: typed_pass,
             login: 1
@@ -79,12 +79,28 @@ function getStuff() {
         //get current month overview page
         var main = getRemote(remote_url, null)
         //getting zeitman navigation is optional
-        var frameteil1 = ""; // getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + res.session_id + "&actday=", null)
+        var frameteil1 = ""; //getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + session_id + "&actday=", null)
         //getting bottom frame
         var frameteil2 = getRemote(zeitman_url + "frameteil2.php?nav=GZ_x&start=1&PHPSESSID=" + session_id + "&actday=", null)
 
         //now hasseling around cross site scripting by filling thre dummy frames
         $("#iframe").contents().find("body").append(main);
+        console.log("bla",$("#iframe").contents().find("script"));
+
+        //search for alerts like in issue #1 and show them in popup
+        $("#iframe").contents().find("script").each(function(){
+          var alert_pos= $(this)[0].innerText.indexOf("alert");
+          if(alert_pos!=-1) { //there is an alert
+            var alert_text= $(this)[0].innerText.substr(alert_pos+6, 9999); //cut to it
+            alert_text= alert_text.substr(0,alert_text.indexOf(")")); //cut after it
+            console.log("found alert:", $(this)[0].innerText);
+            alert(alert_text); //give the alert to the user
+          }
+
+
+        });
+
+
         $("#iframe_navigation").contents().find("body").append(frameteil1);
         $("#iframe_hauptfenster").contents().find("body").append(frameteil2);
 

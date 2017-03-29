@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "p.petring@hzdr.de": {
+      "updates": [
+        { "version": "1.0",
+          "update_link": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/raw/master/web-ext-artifacts/hzdr_zeitman_browser_plugin-1.0-an%2Bfx.xpi" },
+        { "version": "1.1",
+          "update_link": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/raw/master/web-ext-artifacts/hzdr_zeitman_browser_plugin-1.1-an%2Bfx.xpi" }
+      ]
+    }
+  }
+}

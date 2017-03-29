@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "1.0",
+  "version": "1.1",
   "default_locale": "en",
   "description": "__MSG_extensionDescription__",
   "author": "Paul Petring p.petring@hzdr.de",
@@ -10,7 +10,8 @@
 
   "applications": {
     "gecko": {
-      "id": "p.petring@hzdr.de"
+      "id": "p.petring@hzdr.de",
+      "update_url": "https://raw.githubusercontent.com/PaulPetring/hzdr-web-ext-zeitman/master/updates.json"
     }
   },
 
