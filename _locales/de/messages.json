@@ -18,7 +18,7 @@
   "options_password_text": {
     "message": "Ihr HZDR Passwort: "
   },
-  "options_password_text": {
+  "options_password_text_desc": {
     "message": "Passwort speichern und automatisch einfügen."
   },
   "options_button_save": {
