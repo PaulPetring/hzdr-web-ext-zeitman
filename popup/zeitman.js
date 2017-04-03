@@ -40,8 +40,7 @@ function provideLoginForm() {
     console.log("provideLoginForm start");
     var logout = getRemote(zeitman_url + "login.php?navigation.php?logout_end_x=beenden&nav_alle_mon=0", null)
     var login = getRemote(zeitman_url + "login.php", null);
-
-    $('#result').html('<div style="height: 225px; overflow:hidden">' + login + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
+    $('#result').html('<div style="max-height: 225px; overflow:hidden">' + $('#login').html() + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
 
         $('#result').find("#options").click(function(e){ browser.runtime.openOptionsPage(); e.preventDefault(); })
             $('#result').find("#debug").click(function(e){ $('.debug').toggle(); e.preventDefault(); })
