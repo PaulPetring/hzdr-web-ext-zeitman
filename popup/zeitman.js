@@ -38,12 +38,13 @@ function fillCredentials() {
 
 function provideLoginForm() {
     console.log("provideLoginForm start");
-    var logout = getRemote(zeitman_url + "login.php?navigation.php?logout_end_x=beenden&nav_alle_mon=0", null)
-    var login = getRemote(zeitman_url + "login.php", null);
+    //var logout = getRemote(zeitman_url + "login.php?navigation.php?logout_end_x=beenden&nav_alle_mon=0", null)
+    //var login = getRemote(zeitman_url + "login.php", null);
+
     $('#result').html('<div style="max-height: 225px; overflow:hidden">' + $('#login').html() + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
 
-        $('#result').find("#options").click(function(e){ browser.runtime.openOptionsPage(); e.preventDefault(); })
-            $('#result').find("#debug").click(function(e){ $('.debug').toggle(); e.preventDefault(); })
+    $('#result').find("#options").click(function(e){ browser.runtime.openOptionsPage(); e.preventDefault(); })
+    $('#result').find("#debug").click(function(e){ $('.debug').toggle(); e.preventDefault(); })
 
     $('#result').find('input[value="Login"]').click(function(e) {
         console.log("provideLoginForm click");
@@ -86,6 +87,7 @@ function getStuff() {
         var frameteil1 = ""; //getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + session_id + "&actday=", null)
         //getting bottom frame
         var frameteil2 = getRemote(zeitman_url + "frameteil2.php?nav=GZ_x&start=1&PHPSESSID=" + session_id + "&actday=", null)
+        var month =  getRemote(zeitman_url + "frameteil2.php?nav=U_x&start=1&PHPSESSID=" + session_id + "&actday=", null);
 
         //now hasseling around cross site scripting by filling thre dummy frames
         $("#iframe").contents().find("body").append(main);

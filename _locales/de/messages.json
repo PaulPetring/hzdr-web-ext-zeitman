@@ -26,5 +26,14 @@
   },
   "options_button_reset": {
     "message": "Zurücksetzen"
+  },
+  "zeitman_username": {
+    "message": "Benutzername: "
+  },
+  "zeitman_password": {
+    "message": "Passwort: " 
+  },
+  "zeitman_headline": {
+    "message": "Zeiterfassung HZDR"
   }
 }

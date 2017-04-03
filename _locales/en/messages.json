@@ -26,5 +26,14 @@
   },
   "options_button_reset": {
     "message": "reset"
+  },
+  "zeitman_username": {
+    "message": "Username: "
+  },
+  "zeitman_password": {
+    "message": "Password: "
+  },
+  "zeitman_headline": {
+    "message": "HZDR Worktime Management"
   }
 }
