@@ -38,7 +38,7 @@ function fillCredentials() {
 
 function provideLoginForm() {
     console.log("provideLoginForm start");
-    var logout = getRemote(zeitman_url + "login.php?navigation.php?logout_sess_x=true", null)
+    var logout = getRemote(zeitman_url + "login.php?navigation.php?logout_end_x=beenden&nav_alle_mon=0", null)
     var login = getRemote(zeitman_url + "login.php", null);
 
     $('#result').html('<div style="height: 225px; overflow:hidden">' + login + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')

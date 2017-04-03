@@ -11,7 +11,9 @@
         { "version": "1.3",
           "update_link": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/raw/master/web-ext-artifacts/hzdr_zeitman_browser_plugin-1.3-an%2Bfx.xpi" },
         { "version": "1.4",
-          "update_link": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/raw/master/web-ext-artifacts/hzdr_zeitman_browser_plugin-1.4-an%2Bfx.xpi" }
+          "update_link": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/raw/master/web-ext-artifacts/hzdr_zeitman_browser_plugin-1.4-an%2Bfx.xpi" },
+        { "version": "1.5",
+          "update_link": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/raw/master/web-ext-artifacts/hzdr_zeitman_browser_plugin-1.5-an%2Bfx.xpi" }
       ]
     }
   }
