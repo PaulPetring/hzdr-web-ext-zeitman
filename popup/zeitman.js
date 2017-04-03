@@ -38,9 +38,10 @@ function fillCredentials() {
 
 function provideLoginForm() {
     console.log("provideLoginForm start");
-    $('#result').html('<div style="height: 225px; overflow:hidden">' + getRemote(zeitman_url + "login.php", null) + '</div> <a style="cursor:pointer; float:right;" id="options"><small> Options </small></a>')
+    $('#result').html('<div style="height: 225px; overflow:hidden">' + getRemote(zeitman_url + "login.php", null) + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
 
-    $('#result').find("#options").click(function(e){ browser.runtime.openOptionsPage(); e.preventDefault(); })
+        $('#result').find("#options").click(function(e){ browser.runtime.openOptionsPage(); e.preventDefault(); })
+            $('#result').find("#debug").click(function(e){ $('.debug').toggle(); e.preventDefault(); })
 
     $('#result').find('input[value="Login"]').click(function(e) {
         console.log("provideLoginForm click");
@@ -78,6 +79,7 @@ function getStuff() {
         var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + session_id + "&start=1&month=" + (cur_date.getMonth() + 1).toString() + "&year=" + cur_date.getFullYear().toString();
         //get current month overview page
         var main = getRemote(remote_url, null)
+        console.log(main)
         //getting zeitman navigation is optional
         var frameteil1 = ""; //getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + session_id + "&actday=", null)
         //getting bottom frame
