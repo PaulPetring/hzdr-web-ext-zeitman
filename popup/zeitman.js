@@ -91,6 +91,8 @@ function getStuff() {
 
         //now hasseling around cross site scripting by filling thre dummy frames
         $("#iframe").contents().find("body").append(main);
+
+
         console.log("bla",$("#iframe").contents().find("script"));
 
         //search for alerts like in issue #1 and show them in popup
@@ -109,6 +111,11 @@ function getStuff() {
 
         $("#iframe_navigation").contents().find("body").append(frameteil1);
         $("#iframe_hauptfenster").contents().find("body").append(frameteil2);
+        $("#iframe_month").contents().find("body").append(month);
+
+        //holy moly use ids
+        var hours = $("#iframe_month").contents().find('tr[bgcolor="#EEEEEE"]').last().find("td")[8].innerText;
+
 
         //getting non class non id dom element from frame
         _result.html(" ").append($("#iframe_hauptfenster").contents().find('tr[bgcolor="#C0C0FF"]').clone())
@@ -118,11 +125,13 @@ function getStuff() {
             $(this).removeAttr("height");
         })
 
+
         //clone change event bahavior to cloned element
         attach_select_change_event();
 
         //add save button and add click event
         _result.find("td").last().html('<input id="save" type="submit" value="save">');
+        _result.append('<small style="font-size:11px;float: right;">kum: ' + hours + '</small>')
 
         $('#save').click(function(e) { //simply submits unerlying form
             $("#iframe_hauptfenster").contents().find("body").find("form").attr("action", zeitman_url + "navigation.php").attr("target", "Hauptfenster")[0].submit();
