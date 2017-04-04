@@ -24,14 +24,14 @@ function fillCredentials() {
     var passwort = browser.storage.local.get('passwort');
 
     username.then((res) => {
-        if(res.username) {
-          $('input[name="username"]').val(res.username);
+        if (res.username) {
+            $('input[name="username"]').val(res.username);
         }
     });
 
     passwort.then((res) => {
-        if(res.passwort) {
-          $('input[name="passwort"]').val(res.passwort);
+        if (res.passwort) {
+            $('input[name="passwort"]').val(res.passwort);
         }
     });
 }
@@ -43,8 +43,14 @@ function provideLoginForm() {
 
     $('#result').html('<div style="max-height: 225px; overflow:hidden">' + $('#login').html() + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
 
-    $('#result').find("#options").click(function(e){ browser.runtime.openOptionsPage(); e.preventDefault(); })
-    $('#result').find("#debug").click(function(e){ $('.debug').toggle(); e.preventDefault(); })
+    $('#result').find("#options").click(function(e) {
+        browser.runtime.openOptionsPage();
+        e.preventDefault();
+    })
+    $('#result').find("#debug").click(function(e) {
+        $('.debug').toggle();
+        e.preventDefault();
+    })
 
     $('#result').find('input[value="Login"]').click(function(e) {
         console.log("provideLoginForm click");
@@ -74,76 +80,84 @@ function attach_select_change_event() {
 };
 
 function getStuff() {
-        session_id = ""; //for some reason never checked if empty
-        var _result = $('#result'); //less dom, more perfomance
-        var cur_date = new Date();
+    session_id = ""; //for some reason never checked if empty
+    var _result = $('#result'); //less dom, more perfomance
+    var cur_date = new Date();
 
-        //generate current month overview page url
-        var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + session_id + "&start=1&month=" + (cur_date.getMonth() + 1).toString() + "&year=" + cur_date.getFullYear().toString();
-        //get current month overview page
-        var main = getRemote(remote_url, null)
-        console.log(main)
-        //getting zeitman navigation is optional
-        var frameteil1 = ""; //getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + session_id + "&actday=", null)
-        //getting bottom frame
-        var frameteil2 = getRemote(zeitman_url + "frameteil2.php?nav=GZ_x&start=1&PHPSESSID=" + session_id + "&actday=", null)
-        var month =  getRemote(zeitman_url + "frameteil2.php?nav=U_x&start=1&PHPSESSID=" + session_id + "&actday=", null);
+    //generate current month overview page url
+    var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + session_id + "&start=1&month=" + (cur_date.getMonth() + 1).toString() + "&year=" + cur_date.getFullYear().toString();
+    //get current month overview page
+    var main = getRemote(remote_url, null)
+    console.log(main)
+    //getting zeitman navigation is optional
+    var frameteil1 = ""; //getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + session_id + "&actday=", null)
+    //getting bottom frame
+    var frameteil2 = getRemote(zeitman_url + "frameteil2.php?nav=GZ_x&start=1&PHPSESSID=" + session_id + "&actday=", null)
+    var month = getRemote(zeitman_url + "frameteil2.php?nav=U_x&start=1&PHPSESSID=" + session_id + "&actday=", null);
 
-        //now hasseling around cross site scripting by filling thre dummy frames
-        $("#iframe").contents().find("body").append(main);
+    //now hasseling around cross site scripting by filling thre dummy frames
+    $("#iframe").contents().find("body").append(main);
 
 
-        console.log("bla",$("#iframe").contents().find("script"));
+    console.log("bla", $("#iframe").contents().find("script"));
 
-        //search for alerts like in issue #1 and show them in popup
-        $("#iframe").contents().find("script").each(function(){
-          var alert_pos= $(this)[0].innerText.indexOf("alert");
-          if(alert_pos!=-1) { //there is an alert
-            var alert_text= $(this)[0].innerText.substr(alert_pos+6, 9999); //cut to it
-            alert_text= alert_text.substr(0,alert_text.indexOf(")")); //cut after it
+    //search for alerts like in issue #1 and show them in popup
+    $("#iframe").contents().find("script").each(function() {
+        var alert_pos = $(this)[0].innerText.indexOf("alert");
+        if (alert_pos != -1) { //there is an alert
+            var alert_text = $(this)[0].innerText.substr(alert_pos + 6, 9999); //cut to it
+            alert_text = alert_text.substr(0, alert_text.indexOf(")")); //cut after it
             console.log("found alert:", $(this)[0].innerText);
             alert(alert_text); //give the alert to the user
-          }
+        }
 
 
-        });
+    });
 
 
-        $("#iframe_navigation").contents().find("body").append(frameteil1);
-        $("#iframe_hauptfenster").contents().find("body").append(frameteil2);
-        $("#iframe_month").contents().find("body").append(month);
+    $("#iframe_navigation").contents().find("body").append(frameteil1);
+    $("#iframe_hauptfenster").contents().find("body").append(frameteil2);
+    $("#iframe_month").contents().find("body").append(month);
 
-        //holy moly use ids
-        var hours = $("#iframe_month").contents().find('tr[bgcolor="#EEEEEE"]').last().find("td")[8].innerText;
-
-
-        //getting non class non id dom element from frame
-        _result.html(" ").append($("#iframe_hauptfenster").contents().find('tr[bgcolor="#C0C0FF"]').clone())
-        _result.find('input').remove();
-        _result.find("tr").removeAttr("bgcolor");
-        _result.find("td").each(function() {
-            $(this).removeAttr("height");
-        })
+    //holy moly use ids
+    var hours = $("#iframe_month").contents().find('tr[bgcolor="#EEEEEE"]').last().find("td")[8].innerText;
 
 
-        //clone change event bahavior to cloned element
-        attach_select_change_event();
+    //getting non class non id dom element from frame
+    _result.html(" ").append($("#iframe_hauptfenster").contents().find('tr[bgcolor="#C0C0FF"]').clone())
+    _result.find('input').remove();
+    _result.find("tr").removeAttr("bgcolor");
+    _result.find("td").each(function() {
+        $(this).removeAttr("height");
+    })
 
-        //add save button and add click event
-        _result.find("td").last().html('<input id="save" type="submit" value="save">');
-        _result.append('<small style="font-size:11px;float: right;">kum: ' + hours + '</small>')
 
-        $('#save').click(function(e) { //simply submits unerlying form
-            $("#iframe_hauptfenster").contents().find("body").find("form").attr("action", zeitman_url + "navigation.php").attr("target", "Hauptfenster")[0].submit();
-            setTimeout(function() {
-                window.close();
-            }, 500)
-            e.preventDefault();
-        });
+    //clone change event bahavior to cloned element
+    attach_select_change_event();
+
+    //add save button and add click event
+    _result.find("td").last().html('<input id="save" type="submit" value="save">');
+    _result.append('<small style="font-size:11px;float: right;">kum: ' + hours + '</small>')
+
+    $('#save').click(function(e) { //simply submits unerlying form
+        $("#iframe_hauptfenster").contents().find("body").find("form").attr("action", zeitman_url + "navigation.php").attr("target", "Hauptfenster")[0].submit();
+        setTimeout(function() {
+            window.close();
+        }, 500)
+        e.preventDefault();
+    });
 }
 
 $(document).ready(function() {
-        provideLoginForm();
+    provideLoginForm();
+    $('form').each(function() {
+        $(this).find('input').keypress(function(e) {
+            // Enter pressed?
+            if (e.which == 10 || e.which == 13) {
+                $(this).find('input[type="submit"]').trigger();
+            }
+        });
+    });
 });
 
 console.log("end_zeitman");

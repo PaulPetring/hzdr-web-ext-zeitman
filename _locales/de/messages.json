@@ -6,7 +6,7 @@
   },
 
   "extensionDescription": {
-    "message": "Ermöglicht das schnelle Ereichen des HZDR Zeitmanbereiches.",
+    "message": "Ermöglicht das schnelle Erreichen des HZDR Zeitmanbereiches.",
     "description": "Description of the extension."
   },
   "options_username_text": {
@@ -31,7 +31,7 @@
     "message": "Benutzername: "
   },
   "zeitman_password": {
-    "message": "Passwort: " 
+    "message": "Passwort: "
   },
   "zeitman_headline": {
     "message": "Zeiterfassung HZDR"
