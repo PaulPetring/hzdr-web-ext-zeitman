@@ -6,3 +6,13 @@ h1 {
     font-family: Arial;
     font-size: 1.5em;
 }
+.changed {
+    border: 2px dotted red;
+}
+#additional_result {
+  padding-top: 2px;
+}
+.small{
+  font-family: Arial;
+  font-size: 11px;
+}

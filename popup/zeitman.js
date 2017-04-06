@@ -3,6 +3,29 @@ console.log("begin_zeitman");
 var session_id = null;
 var already_Logged_In = false;
 var zeitman_url = "https://zeitweb.hzdr.de/scripts_zeitm/"
+var cur_date = new Date();
+
+//global time selectors
+var _result = $("#result");
+var _additional_result = $("#additional_result");
+var tf_vonSS = [];
+var tf_vonMM = [];
+var tf_bisSS = [];
+var tf_bisMM = [];
+var kum = {}
+kum.hours = 0;
+kum.minutes = 0;
+kum._hours = 0;
+kum._minutes = 0;
+kum.in_minutes = 0;
+kum.add = function (hours,minutes) {
+  kum.in_minutes = ( (60 * parseInt(kum._hours,10)) + parseInt(kum._minutes))
+  console.log("kum.in_minutes",kum.in_minutes)
+  kum.in_minutes += ( (60*hours) +minutes);
+  kum.hours = Math.floor(kum.in_minutes / 60);
+  kum.minutes = kum.in_minutes - (60 * kum.hours);
+  console.log("kum",kum)
+}
 
 document.addEventListener("click", (e) => {
     e.preventDefault();
@@ -41,18 +64,18 @@ function provideLoginForm() {
     //var logout = getRemote(zeitman_url + "login.php?navigation.php?logout_end_x=beenden&nav_alle_mon=0", null)
     //var login = getRemote(zeitman_url + "login.php", null);
 
-    $('#result').html('<div style="max-height: 225px; overflow:hidden">' + $('#login').html() + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
+    _result.html('<div style="max-height: 225px; overflow:hidden">' + $('#login').html() + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
 
-    $('#result').find("#options").click(function(e) {
+    _result.find("#options").click(function(e) {
         browser.runtime.openOptionsPage();
         e.preventDefault();
     })
-    $('#result').find("#debug").click(function(e) {
+    _result.find("#debug").click(function(e) {
         $('.debug').toggle();
         e.preventDefault();
     })
 
-    $('#result').find('input[value="Login"]').click(function(e) {
+    _result.find('input[value="Login"]').click(function(e) {
         console.log("provideLoginForm click");
         var typed_user = $('#result').find('input[name="username"]').val();
         var typed_pass = $('#result').find('input[name="passwort"]').val();
@@ -71,24 +94,129 @@ function provideLoginForm() {
     console.log("provideLoginForm ende");
 }
 
-function attach_select_change_event() {
-    $('#result').find('select').change(function() {
-        console.log(this);
-        cur_name = $(this).attr("name");
-        $("#iframe_hauptfenster").contents().find("body").find('select[name="' + cur_name + '"]').val($(this).val());
+function getTimeSelectors() {
+    console.log("getTimeSelectors");
+    _result = $('#result');
+    tf_vonSS = _result.find('select[name^=tf_vonSS]');
+    tf_vonMM = _result.find('select[name^=tf_vonMM]');
+    tf_bisSS = _result.find('select[name^=tf_bisSS]');
+    tf_bisMM = _result.find('select[name^=tf_bisMM]');
+}
+
+function pad(num, size) {
+    var s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
+function showCalculatedWorktime() { // gives user feedback about current set work time
+    console.log("showCalculatedWorktime");
+    if (tf_vonSS.length > 0) {
+        var start_date = new Date();
+        start_date.setMinutes(tf_vonMM.val());
+        start_date.setHours(tf_vonSS.val());
+        var end_date = new Date()
+        end_date.setMinutes(tf_bisMM.val());
+        end_date.setHours(tf_bisSS.val());
+
+        var regular_work_end_date = new Date();
+        regular_work_end_date.setTime(start_date.getTime() + (1000 * 60 * (7 * 60 + 48 + 30))); //regular work time is 7 hours 48 minutes + 30 minutes break
+
+        var kum_diff = end_date.getTime() - regular_work_end_date.getTime();
+
+        if( regular_work_end_date.getTime() >= end_date.getTime() )  {
+          var kum_diff = regular_work_end_date.getTime() - end_date.getTime();
+        }
+
+
+        var kum_diff_hours = Math.floor(kum_diff / (1000 * 60 * 60));
+        kum_diff -= kum_diff_hours * (1000 * 60 * 60);
+
+        var kum_diff_mins = Math.floor(kum_diff / (1000 * 60));
+        kum_diff -= kum_diff_mins * (1000 * 60);
+
+        if( regular_work_end_date.getTime() >= end_date.getTime() )  {
+          kum.add(0-parseInt(kum_diff_hours,10),0-parseInt(kum_diff_mins,10));
+        } else {
+          kum.add(parseInt(kum_diff_hours,10),parseInt(kum_diff_mins,10));
+        }
+
+
+        var diff = end_date.getTime() - start_date.getTime(); //in miliseconds
+
+        if (diff >= 1000 * 60 * 60 * 9) { // longer than 9 hours
+            diff = diff - 1000 * 60 * 15; //discount 15minutes
+        }
+
+        if (diff >= 1000 * 60 * 60 * 6) { // still longer than 6 hours
+            diff = diff - 1000 * 60 * 30; //discount 30 minutes
+        }
+
+        var hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+
+        var mins = Math.floor(diff / (1000 * 60));
+        diff -= mins * (1000 * 60);
+
+
+
+
+        _additional_result.html("<strong>" + pad(start_date.getHours(), 2) + ":" + pad(start_date.getMinutes(), 2) + " - " + pad(end_date.getHours(), 2) + ":" + pad(end_date.getMinutes(), 2) + ": </strong> " + pad(hours,2) + "h" + pad(mins,2) + "min of 7h48min");
+        _additional_result.append(" <strong>diff time:</strong> " +  kum_diff_hours  + "h" +  kum_diff_mins + "min ");
+        _additional_result.append(" <strong>regular work end time:</strong> " + pad(regular_work_end_date.getHours(), 2) + ":" + pad(regular_work_end_date.getMinutes(), 2));
+        _additional_result.append("<br> <strong>current time account:</strong> \t" + kum._hours + "h" + kum._minutes + "min ");
+        _additional_result.append(" <strong> predicted time account:</strong> \t" + kum.hours + "h" + kum.minutes + "min ");
+    } else {
+        $("#additional_result").html("no hour calculation possible");
+    }
+}
+
+function preset_times() { //sets starting or end time to the current rounded date
+
+    //leave if there are no select boxes available
+    if (tf_vonMM.length == 0 || tf_vonMM.length == 0 || tf_vonMM.length == 0 || tf_vonMM.length == 0) {
+        return;
+    }
+    //round date to 5 minute instances
+    var coeff = 1000 * 60 * 5;
+    var rounded_date = new Date(Math.round(cur_date.getTime() / coeff) * coeff)
+
+    //set end date if start date is set
+    if (tf_vonMM.val() != 0 && tf_bisMM.val() == 0) {
+        tf_bisMM.find('option[value="' + rounded_date.getMinutes() + '"]').attr('selected', true).addClass("changed").trigger("change");
+        tf_bisMM.addClass("changed").attr("title", "suggested current time by the plugin");
+    }
+    if (tf_vonSS.val() != 0 && tf_bisSS.val() == 0) {
+        tf_bisSS.find('option[value="' + rounded_date.getHours() + '"]').attr('selected', true).addClass("changed").trigger("change");
+        tf_bisSS.addClass("changed").attr("title", "suggested current time  by the plugin");
+    }
+
+    // set start date if empty
+    if (tf_vonMM.val() == 0) {
+        tf_vonMM.find('option[value="' + rounded_date.getMinutes() + '"]').attr('selected', true).addClass("changed").trigger("change");
+        tf_vonMM.addClass("changed").attr("title", "suggested current time by the plugin");
+    }
+    if (tf_vonSS.val() == 0) {
+        tf_vonSS.find('option[value="' + rounded_date.getHours() + '"]').attr('selected', true).addClass("changed").trigger("change");
+        tf_vonSS.addClass("changed").attr("title", "suggested current time by the plugin");
+    }
+}
+
+function attach_select_change_event() { //sets the select boxes in the iframe if the result boxes are changed
+    _result.find('select').change(function() {
+        $("#iframe_hauptfenster").contents().find("body").find('select[name="' + $(this).attr("name") + '"]').val($(this).val());
+        showCalculatedWorktime();
     });
 };
 
 function getStuff() {
     session_id = ""; //for some reason never checked if empty
-    var _result = $('#result'); //less dom, more perfomance
-    var cur_date = new Date();
+    _result = $('#result'); //less dom, more perfomance
 
     //generate current month overview page url
     var remote_url = zeitman_url + "navigation.php?PHPSESSID=" + session_id + "&start=1&month=" + (cur_date.getMonth() + 1).toString() + "&year=" + cur_date.getFullYear().toString();
     //get current month overview page
     var main = getRemote(remote_url, null)
-    console.log(main)
     //getting zeitman navigation is optional
     var frameteil1 = ""; //getRemote(zeitman_url + "frameteil1.php?nav=GZ_x&start=1&lizenzname=Zeiterfassung%A0HZDR&PHPSESSID=" + session_id + "&actday=", null)
     //getting bottom frame
@@ -110,8 +238,6 @@ function getStuff() {
             console.log("found alert:", $(this)[0].innerText);
             alert(alert_text); //give the alert to the user
         }
-
-
     });
 
 
@@ -120,8 +246,11 @@ function getStuff() {
     $("#iframe_month").contents().find("body").append(month);
 
     //holy moly use ids
-    var hours = $("#iframe_month").contents().find('tr[bgcolor="#EEEEEE"]').last().find("td")[8].innerText;
-
+    var kum_raw = $("#iframe_month").contents().find('tr[bgcolor="#EEEEEE"]').last().find("td")[8].innerText;
+    kum._hours = kum_raw.substr(0,kum_raw.indexOf(":"));
+    kum.hours = kum._hours
+    kum._minutes = kum_raw.substr(kum_raw.indexOf(":") + 1, 99);
+    kum.minutes = kum._minutes
 
     //getting non class non id dom element from frame
     _result.html(" ").append($("#iframe_hauptfenster").contents().find('tr[bgcolor="#C0C0FF"]').clone())
@@ -131,13 +260,16 @@ function getStuff() {
         $(this).removeAttr("height");
     })
 
-
     //clone change event bahavior to cloned element
     attach_select_change_event();
 
     //add save button and add click event
     _result.find("td").last().html('<input id="save" type="submit" value="save">');
-    _result.append('<small style="font-size:11px;float: right;">kum: ' + hours + '</small>')
+    //_result.append('<small style="font-size:11px;float: right;">kum: ' + kum + '</small>');
+
+    getTimeSelectors();
+    preset_times();
+    showCalculatedWorktime();
 
     $('#save').click(function(e) { //simply submits unerlying form
         $("#iframe_hauptfenster").contents().find("body").find("form").attr("action", zeitman_url + "navigation.php").attr("target", "Hauptfenster")[0].submit();
