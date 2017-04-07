@@ -182,21 +182,17 @@ function preset_times() { //sets starting or end time to the current rounded dat
     var rounded_date = new Date(Math.round(cur_date.getTime() / coeff) * coeff)
 
     //set end date if start date is set
-    if (tf_vonMM.val() != 0 && tf_bisMM.val() == 0) {
+    if (tf_vonSS.val() != 0 && tf_bisMM.val() == 0 && tf_bisSS.val() == 0) {
         tf_bisMM.find('option[value="' + rounded_date.getMinutes() + '"]').attr('selected', true).addClass("changed").trigger("change");
         tf_bisMM.addClass("changed").attr("title", "suggested current time by the plugin");
-    }
-    if (tf_vonSS.val() != 0 && tf_bisSS.val() == 0) {
         tf_bisSS.find('option[value="' + rounded_date.getHours() + '"]').attr('selected', true).addClass("changed").trigger("change");
         tf_bisSS.addClass("changed").attr("title", "suggested current time  by the plugin");
     }
 
     // set start date if empty
-    if (tf_vonMM.val() == 0) {
+    if (tf_vonMM.val() == 0 && tf_vonSS.val() == 0) {
         tf_vonMM.find('option[value="' + rounded_date.getMinutes() + '"]').attr('selected', true).addClass("changed").trigger("change");
         tf_vonMM.addClass("changed").attr("title", "suggested current time by the plugin");
-    }
-    if (tf_vonSS.val() == 0) {
         tf_vonSS.find('option[value="' + rounded_date.getHours() + '"]').attr('selected', true).addClass("changed").trigger("change");
         tf_vonSS.addClass("changed").attr("title", "suggested current time by the plugin");
     }
