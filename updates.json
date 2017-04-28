@@ -69,6 +69,15 @@
                             "strict_min_version": "52"
                         }
                     }
+                },
+                {
+                    "version": "1.11",
+                    "update_link": "https://github.com/PaulPetring/hzdr-web-ext-zeitman/raw/master/web-ext-artifacts/hzdr_zeitman_browser_plugin-1.11-an%2Bfx.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "52"
+                        }
+                    }
                 }
             ]
         }

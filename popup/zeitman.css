@@ -16,3 +16,9 @@ h1 {
   font-family: Arial;
   font-size: 11px;
 }
+
+#alerts
+{
+  color: red;
+  font-weight: bold;
+}

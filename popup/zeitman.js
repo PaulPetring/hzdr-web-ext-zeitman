@@ -19,8 +19,8 @@ kum._hours = 0;
 kum._minutes = 0;
 kum.in_minutes = 0;
 kum.add = function (hours,minutes) {
-  kum.in_minutes = ( (60 * parseInt(kum._hours,10)) + parseInt(kum._minutes))
-  console.log("kum.in_minutes",kum.in_minutes)
+  kum.in_minutes = ( (60 * parseInt(kum._hours,10)) + parseInt(kum._minutes));
+  console.log("kum.in_minutes",kum.in_minutes);
   kum.in_minutes += ( (60*hours) +minutes);
   kum.hours = Math.floor(kum.in_minutes / 60);
   kum.minutes = kum.in_minutes - (60 * kum.hours);
@@ -64,8 +64,7 @@ function provideLoginForm() {
     //var logout = getRemote(zeitman_url + "login.php?navigation.php?logout_end_x=beenden&nav_alle_mon=0", null)
     //var login = getRemote(zeitman_url + "login.php", null);
 
-    _result.html('<div style="max-height: 225px; overflow:hidden">' + $('#login').html() + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>')
-
+    _result.html('<div style="max-height: 225px; overflow:hidden">' + $('#login').html() + '</div>   <a style="cursor:pointer; float:right;" id="options"><small> Options </small> </a> <br> <a style="cursor:pointer; float:right;" id="debug"><small> Debug </small></a>');
     _result.find("#options").click(function(e) {
         browser.runtime.openOptionsPage();
         e.preventDefault();
@@ -74,7 +73,6 @@ function provideLoginForm() {
         $('.debug').toggle();
         e.preventDefault();
     })
-
     _result.find('input[value="Login"]').click(function(e) {
         console.log("provideLoginForm click");
         var typed_user = $('#result').find('input[name="username"]').val();
@@ -144,11 +142,11 @@ function showCalculatedWorktime() { // gives user feedback about current set wor
 
         var diff = end_date.getTime() - start_date.getTime(); //in miliseconds
 
-        if (diff >= 1000 * 60 * 60 * 9) { // longer than 9 hours
+        if (diff > 1000 * 60 * 60 * 9) { // longer than 9 hours
             diff = diff - 1000 * 60 * 15; //discount 15minutes
         }
 
-        if (diff >= 1000 * 60 * 60 * 6) { // still longer than 6 hours
+        if (diff > 1000 * 60 * 60 * 6) { // still longer than 6 hours
             diff = diff - 1000 * 60 * 30; //discount 30 minutes
         }
 
@@ -157,9 +155,6 @@ function showCalculatedWorktime() { // gives user feedback about current set wor
 
         var mins = Math.floor(diff / (1000 * 60));
         diff -= mins * (1000 * 60);
-
-
-
 
         _additional_result.html("<strong>" + pad(start_date.getHours(), 2) + ":" + pad(start_date.getMinutes(), 2) + " - " + pad(end_date.getHours(), 2) + ":" + pad(end_date.getMinutes(), 2) + ": </strong> " + pad(hours,2) + "h" + pad(mins,2) + "min of 7h48min");
         _additional_result.append(" <strong>diff time:</strong> " +  kum_diff_hours  + "h" +  kum_diff_mins + "min ");
@@ -232,7 +227,9 @@ function getStuff() {
             var alert_text = $(this)[0].innerText.substr(alert_pos + 6, 9999); //cut to it
             alert_text = alert_text.substr(0, alert_text.indexOf(")")); //cut after it
             console.log("found alert:", $(this)[0].innerText);
-            alert(alert_text); //give the alert to the user
+            $('#alerts').html(unescape(alert_text) + '<a href="#"> goto Zeitman </a>'); //give the alert to the user
+            $('#alerts a').click(function(){browser.tabs.create({ "url": "https://zeitweb.hzdr.de/scripts_zeitm/login.php" }); })
+
         }
     });
 
