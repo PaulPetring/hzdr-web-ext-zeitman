@@ -22,3 +22,9 @@ h1 {
   color: red;
   font-weight: bold;
 }
+
+.navigation
+{
+  font-family: Arial;
+  font-size: 10px;
+}

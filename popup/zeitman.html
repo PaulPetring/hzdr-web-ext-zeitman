@@ -3,45 +3,50 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="zeitman.css" />
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="zeitman.css" />
 </head>
 
 <body>
 
-    <div id="result"> </div>
-    <div id="additional_result" title="use with caution" class="small">  </div>
-    <div id="alerts" class="small"> </div>
-    <div id="debug" class="debug" style="display:none;">
-        <iframe id="iframe" style="width:330px;"> </iframe>
-        <iframe id="iframe_navigation" name="Navigation" style="width:330px;"> </iframe><br>
-        <iframe id="iframe_month" name="iframe_month" style="width:330px;"> </iframe><br>
-        <iframe id="iframe_hauptfenster" name="Hauptfenster" style="width:700px;"> </iframe>
-        <div id="login">
-            <form>
-                <h1 class="i18n_zeitman_headline"></h1>
-                <table class="tabcenter">
-                    <tbody>
-                        <tr>
-                            <td class="i18n_zeitman_username"></td>
-                            <td class="text"><input name="username" value="" size="20" type="text"></td>
-                        </tr>
-                        <tr>
-                            <td class="i18n_zeitman_password"></td>
-                            <td><input name="passwort" value="" size="20" type="password"></td>
-                        </tr>
-                    </tbody>
-                </table>
+  <div id="result"> </div>
+  <div id="additional_result" title="use with caution" class="small"> </div>
+  <div id="alerts" class="small"> </div>
+  <div id="navigation" class="navigation">
+    <a style="cursor:pointer; float:right; margin-left: 5px; " id="options"><small> Options </small> </a>
+    <a style="cursor:pointer; float:right; margin-left: 5px; " id="debug"><small> Debug </small></a>
+    <a style="cursor:pointer; float:right; margin-left: 5px; " id="openZeitman"><small> Open Zeitman </small></a>
+  </div>
+  <div id="debug" class="debug" style="display:none;">
+    <iframe id="iframe" style="width:330px;"> </iframe>
+    <iframe id="iframe_navigation" name="Navigation" style="width:330px;"> </iframe><br>
+    <iframe id="iframe_month" name="iframe_month" style="width:330px;"> </iframe><br>
+    <iframe id="iframe_hauptfenster" name="Hauptfenster" style="width:700px;"> </iframe>
+    <div id="login">
+      <form>
+        <h1 class="i18n_zeitman_headline"></h1>
+        <table class="tabcenter">
+          <tbody>
+            <tr>
+              <td class="i18n_zeitman_username"></td>
+              <td class="text"><input name="username" value="" size="20" type="text"></td>
+            </tr>
+            <tr>
+              <td class="i18n_zeitman_password"></td>
+              <td><input name="passwort" value="" size="20" type="password"></td>
+            </tr>
+          </tbody>
+        </table>
 
-            <div style="margin-left: auto; margin-right: auto; text-align:center;">
-                <input value="Login" class="button3" id="button" type="submit">
-            </div>
-            </form>
+        <div style="margin-left: auto; margin-right: auto; text-align:center;">
+          <input value="Login" class="button3" id="button" type="submit">
         </div>
+      </form>
     </div>
-    <script src="jquery.js"></script>
-    <script src="zeitman.js"></script>
-    <script type="text/javascript" src="/lib/i18n.js"></script>
+  </div>
+  <script src="jquery.js"></script>
+  <script src="zeitman.js"></script>
+  <script type="text/javascript" src="/lib/i18n.js"></script>
 </body>
 
 </html>
