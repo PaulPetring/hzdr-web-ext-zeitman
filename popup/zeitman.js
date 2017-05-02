@@ -163,7 +163,7 @@ function showCalculatedWorktime() { // gives user feedback about current set wor
     _additional_result.append("<br> <strong>current time account:</strong> \t" + kum._hours + "h" + kum._minutes + "min ");
     _additional_result.append(" <strong> predicted time account:</strong> \t" + kum.hours + "h" + kum.minutes + "min ");
 
-    if (hours >= 10 && mins >0) {
+    if (hours >= 10 && !(hours==10 && mins==0)) {
       $('#save').prop("disabled", true);
 
 
